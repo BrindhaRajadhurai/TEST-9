@@ -74,6 +74,29 @@
         color: var(--accent);
       }
 
+      /* Mobile menu button */
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 30px;
+        height: 25px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 10;
+      }
+      .menu-toggle span {
+        width: 100%;
+        height: 3px;
+        background-color: var(--white);
+        border-radius: 5px;
+        transition: all 0.3s linear;
+        position: relative;
+        transform-origin: 1px;
+      }
+
       /* SLIDES */
       section {
         width: 100%;
@@ -113,6 +136,8 @@
       }
       .content {
         max-width: 1000px;
+        padding-top: 60px; /* Added padding for mobile header */
+        padding-bottom: 60px; /* Added padding for bottom rail */
       }
       .eyebrow {
         text-transform: uppercase;
@@ -235,7 +260,7 @@
         left: 0;
         width: 100%;
         background: rgba(0, 0, 0, 0.85);
-        padding: 10px 0;
+        padding: 12px 0;
         display: flex;
         justify-content: space-around;
         z-index: 1000;
@@ -243,9 +268,13 @@
       .bottom-rail span {
         font-size: 12px;
         color: #fff;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 4px;
       }
       .bottom-rail span.active {
         color: var(--accent);
+        background: rgba(0, 212, 255, 0.15);
       }
 
       /* FOOTER */
@@ -258,31 +287,116 @@
       }
 
       /* RESPONSIVE */
+      @media (max-width: 1024px) {
+        header {
+          padding: 14px 30px;
+        }
+        
+        .left-rail {
+          left: 30px;
+        }
+      }
+
       @media (max-width: 768px) {
         header {
           padding: 14px 20px;
         }
+        
         h1 {
-          font-size: 26px;
-          line-height: 1.3;
+          font-size: 32px;
         }
+        
+        .content {
+          padding-top: 80px;
+          padding-bottom: 70px;
+        }
+        
+        /* Mobile navigation */
+        .menu-toggle {
+          display: flex;
+        }
+        
+        nav .nav-links {
+          position: fixed;
+          top: 0;
+          right: -100%;
+          height: 100vh;
+          width: 70%;
+          flex-direction: column;
+          background: rgba(0, 0, 0, 0.95);
+          backdrop-filter: blur(10px);
+          padding: 80px 30px 30px;
+          gap: 25px;
+          transition: right 0.3s ease-in-out;
+          z-index: 999;
+        }
+        
+        nav .nav-links.active {
+          right: 0;
+        }
+        
+        .nav-links a {
+          font-size: 18px;
+          padding: 10px 0;
+          border-bottom: 1px solid var(--muted);
+        }
+        
+        .left-rail {
+          display: none;
+        }
+        
+        .bottom-rail {
+          display: flex;
+        }
+        
+        .box-grid {
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
+        
+        .team-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 480px) {
+        header h2 {
+          font-size: 18px;
+        }
+        
+        h1 {
+          font-size: 28px;
+          margin-bottom: 12px;
+        }
+        
         p {
+          font-size: 15px;
+        }
+        
+        .content {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+        
+        .eyebrow {
+          font-size: 12px;
+        }
+        
+        .box {
+          padding: 15px;
+        }
+        
+        .box h3 {
+          font-size: 16px;
+        }
+        
+        .box p {
           font-size: 14px;
         }
-        .content {
-          padding: 0 10px;
-        }
-        .left-rail {
-          display: none; /* hide side rail */
-        }
-        .bottom-rail {
-          display: flex; /* show bottom rail nav */
-        }
-        .slide {
-          min-height: 100vh; /* instead of fixed */
-          padding-top: 80px; /* space for header */
-          padding-bottom: 60px; /* space for bottom nav */
-          position: relative; /* prevent cutoff */
+        
+        .bottom-rail span {
+          font-size: 10px;
+          padding: 4px 5px;
         }
       }
     </style>
@@ -298,6 +412,11 @@
         />
         <h2>Abhinaya Limited</h2>
       </div>
+      <button class="menu-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <nav>
         <div class="nav-links">
           <a href="#home" class="active">Home</a>
@@ -462,7 +581,7 @@
               <h3>AI-Powered Clinical Documentation</h3>
               <p>
                 Reduced documentation time by 40%.<br /><i
-                  >“Transformed our workflows — now instant.”</i
+                  >"Transformed our workflows — now instant."</i
                 >
               </p>
             </div>
@@ -470,7 +589,7 @@
               <h3>Hospital Operations Portal</h3>
               <p>
                 Connected departments with real-time visibility.<br /><i
-                  >“A game-changer for safety and efficiency.”</i
+                  >"A game-changer for safety and efficiency."</i
                 >
               </p>
             </div>
@@ -478,7 +597,7 @@
               <h3>AI Analytics for Performance</h3>
               <p>
                 15% improvement in resource allocation.<br /><i
-                  >“Reliable data for confident decisions.”</i
+                  >"Reliable data for confident decisions."</i
                 >
               </p>
             </div>
@@ -563,20 +682,16 @@
               </p>
             </div>
           </div>
+
+          <h1 style="margin-top: 40px">Leadership</h1>
           <div class="team-grid">
             <div class="team-card">
-              <h3>Leadership</h3>
-              <p>
-                Founder & Director with PhD in HPC and over 20 years in research
-                and industry projects worldwide.
-              </p>
+              <h3>Ms Brindha Murugesan</h3>
+              <p>Director</p>
             </div>
             <div class="team-card">
-              <h3>Our Edge</h3>
-              <p>
-                Multidisciplinary expertise, agility, and partnerships across
-                healthcare, manufacturing, and academia.
-              </p>
+              <h3>Mr Karthee Sivalingam</h3>
+              <p>Director</p>
             </div>
           </div>
         </div>
@@ -587,21 +702,34 @@
         <div
           class="slide-bg"
           style="
-            background-image: url('https://images.unsplash.com/photo-1508780709619-79562169bc64');
+            background-image: url('https://images.unsplash.com/photo-1504711434969-e33886168f5c');
           "
         ></div>
         <div class="overlay-gradient"></div>
         <div class="content">
-          <div class="eyebrow">News</div>
-          <h1>Updates</h1>
+          <div class="eyebrow">News & Insights</div>
+          <h1>Latest Updates</h1>
           <div class="box-grid">
             <div class="box">
-              <h3>March 2023</h3>
-              <p>Abhinaya Limited founded in Bristol, UK.</p>
+              <h3>2023</h3>
+              <p>
+                Company incorporated and began delivering consulting across
+                healthcare and HPC sectors.
+              </p>
             </div>
             <div class="box">
-              <h3>Coming Soon</h3>
-              <p>Partnership announcements with global research institutes.</p>
+              <h3>2024</h3>
+              <p>
+                Development of AI-powered healthcare documentation and
+                automation platforms.
+              </p>
+            </div>
+            <div class="box">
+              <h3>2025</h3>
+              <p>
+                Expansion of partnerships with universities, hospitals, and
+                industry leaders in AI & HPC.
+              </p>
             </div>
           </div>
         </div>
@@ -612,70 +740,102 @@
         <div
           class="slide-bg"
           style="
-            background-image: url('https://images.unsplash.com/photo-1497493292307-31c376b6e479');
+            background-image: url('https://images.unsplash.com/photo-1521791055366-0d553872125f');
           "
         ></div>
         <div class="overlay-gradient"></div>
         <div class="content">
-          <div class="eyebrow">Contact</div>
-          <h1>Let’s Connect</h1>
-          <p>Email: info@abhinaya.co.uk<br />Phone: +44 1234 567890</p>
+          <div class="eyebrow">Contact Us</div>
+          <h1>Let's Work Together</h1>
+          <div class="box-grid">
+            <div class="box">
+              <h3>Email</h3>
+              <p>contact@abhinaya.co.uk</p>
+            </div>
+            <div class="box">
+              <h3>Location</h3>
+              <p>Bristol, United Kingdom</p>
+            </div>
+            <div class="box">
+              <h3>LinkedIn</h3>
+              <p>linkedin.com/company/abhinaya-ltd</p>
+            </div>
+          </div>
         </div>
       </article>
     </section>
 
-    <!-- BOTTOM RAIL (MOBILE) -->
+    <!-- BOTTOM RAIL -->
     <div class="bottom-rail">
-      <span data-slide="home" class="active">Home</span>
-      <span data-slide="services">Services</span>
-      <span data-slide="cases">Cases</span>
-      <span data-slide="why">Why</span>
-      <span data-slide="about">About</span>
-      <span data-slide="news">News</span>
-      <span data-slide="contact">Contact</span>
+      <span class="active">Home</span>
+      <span>Services</span>
+      <span>Cases</span>
+      <span>Why</span>
+      <span>About</span>
+      <span>News</span>
+      <span>Contact</span>
     </div>
 
     <!-- FOOTER -->
-    <footer>© 2025 Abhinaya Limited. All rights reserved.</footer>
+    <footer>
+      <p>© 2025 Abhinaya Limited. All rights reserved.</p>
+    </footer>
 
+    <!-- SCRIPT -->
     <script>
       const slides = document.querySelectorAll(".slide");
-      const navLinks = document.querySelectorAll(".nav-links a");
       const railItems = document.querySelectorAll(".rail-item");
-      const bottomItems = document.querySelectorAll(".bottom-rail span");
+      const navLinks = document.querySelectorAll(".nav-links a");
+      const bottomRail = document.querySelectorAll(".bottom-rail span");
+      const menuToggle = document.querySelector(".menu-toggle");
+      const navMenu = document.querySelector(".nav-links");
 
       function setActive(id) {
         slides.forEach((s) => s.classList.remove("active"));
-        document.getElementById(id).classList.add("active");
-
-        navLinks.forEach((l) => l.classList.remove("active"));
-        document
-          .querySelector(`.nav-links a[href="#${id}"]`)
-          .classList.add("active");
-
         railItems.forEach((r) => r.classList.remove("active"));
-        document
-          .querySelector(`.rail-item[data-slide="${id}"]`)
-          .classList.add("active");
+        navLinks.forEach((n) => n.classList.remove("active"));
+        bottomRail.forEach((b) => b.classList.remove("active"));
 
-        bottomItems.forEach((b) => b.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
         document
-          .querySelector(`.bottom-rail span[data-slide="${id}"]`)
-          .classList.add("active");
+          .querySelectorAll(`[data-slide="${id}"]`)
+          .forEach((r) => r.classList.add("active"));
+        document
+          .querySelectorAll(`[href="#${id}"]`)
+          .forEach((n) => n.classList.add("active"));
+        document
+          .querySelectorAll(".bottom-rail span")
+          [Array.from(slides).findIndex((s) => s.id === id)].classList.add(
+            "active"
+          );
+          
+        // Close mobile menu when a link is clicked
+        if (navMenu.classList.contains("active")) {
+          navMenu.classList.remove("active");
+          menuToggle.classList.remove("active");
+        }
       }
 
-      navLinks.forEach((l) => {
-        l.addEventListener("click", (e) => {
+      // Toggle mobile menu
+      menuToggle.addEventListener("click", function() {
+        this.classList.toggle("active");
+        navMenu.classList.toggle("active");
+      });
+
+      railItems.forEach((item) =>
+        item.addEventListener("click", () =>
+          setActive(item.getAttribute("data-slide"))
+        )
+      );
+      navLinks.forEach((link) =>
+        link.addEventListener("click", (e) => {
           e.preventDefault();
-          setActive(l.getAttribute("href").substring(1));
-        });
-      });
-      railItems.forEach((r) => {
-        r.addEventListener("click", () => setActive(r.dataset.slide));
-      });
-      bottomItems.forEach((b) => {
-        b.addEventListener("click", () => setActive(b.dataset.slide));
-      });
+          setActive(link.getAttribute("href").substring(1));
+        })
+      );
+      bottomRail.forEach((span, i) =>
+        span.addEventListener("click", () => setActive(slides[i].id))
+      );
     </script>
   </body>
 </html>
