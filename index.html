@@ -28,6 +28,8 @@
         --muted: rgba(255, 255, 255, 0.12);
         --card-bg: rgba(255, 255, 255, 0.05);
         --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        --gradient: linear-gradient(135deg, #00d4ff 0%, #7e53eb 100%);
+        --section-padding: 120px 0;
       }
 
       * {
@@ -42,9 +44,6 @@
         color: var(--white);
         overflow-x: hidden;
         line-height: 1.6;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
       }
 
       /* NAVBAR */
@@ -67,6 +66,7 @@
       header.scrolled {
         padding: 12px 50px;
         background: rgba(0, 0, 0, 0.95);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
       }
 
       .logo-container {
@@ -79,15 +79,17 @@
         height: 40px;
         width: auto;
         transition: var(--transition);
+        filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
       }
 
       header h2 {
         font-family: "Oswald", sans-serif;
         font-size: 24px;
         font-weight: 600;
-        background: linear-gradient(to right, var(--accent), #a0e8ff);
+        background: var(--gradient);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
       }
 
       nav .nav-links {
@@ -136,45 +138,32 @@
         color: white;
         font-size: 24px;
         z-index: 1001;
+        transition: var(--transition);
       }
 
-      /* MAIN CONTENT CONTAINER */
-      .main-container {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        margin-top: 80px; /* Account for fixed header */
-        height: calc(100vh - 80px);
-        position: relative;
+      .hamburger:hover {
+        color: var(--accent);
+        transform: rotate(90deg);
       }
 
       /* SLIDES */
       section {
         width: 100%;
-        height: 100%;
+        min-height: 100vh;
         position: relative;
         overflow: hidden;
+        padding: 100px 0;
+        display: flex;
+        align-items: center;
       }
 
       .slide {
         width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.8s ease, visibility 0.8s;
+        min-height: 100vh;
+        position: relative;
         display: flex;
-        flex-direction: column;
         align-items: center;
-        text-align: center;
-      }
-
-      .slide.active {
-        opacity: 1;
-        visibility: visible;
-        z-index: 1;
+        padding: 100px 0;
       }
 
       .slide-bg {
@@ -202,24 +191,13 @@
       }
 
       .content {
-        max-width: 1000px;
-        width: 100%;
-        padding: 20px;
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 40px;
+        opacity: 1;
+        transform: none;
         z-index: 10;
         position: relative;
-        overflow-y: auto;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .slide.active .content {
-        opacity: 1;
-        transform: translateY(0);
       }
 
       .eyebrow {
@@ -233,6 +211,8 @@
         padding: 6px 14px;
         background: rgba(0, 212, 255, 0.15);
         border-radius: 30px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 212, 255, 0.2);
       }
 
       h1 {
@@ -242,6 +222,9 @@
         text-transform: uppercase;
         line-height: 1.2;
         text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        background: linear-gradient(to right, #fff, var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
 
       p {
@@ -259,7 +242,6 @@
         gap: 24px;
         margin-top: 40px;
         text-align: left;
-        width: 100%;
       }
 
       .box {
@@ -271,6 +253,8 @@
         backdrop-filter: blur(10px);
         position: relative;
         overflow: hidden;
+        transform-style: preserve-3d;
+        perspective: 1000px;
       }
 
       .box:before {
@@ -291,7 +275,7 @@
       }
 
       .box:hover {
-        transform: translateY(-5px);
+        transform: translateY(-5px) rotateX(5deg);
         border-color: var(--accent);
         box-shadow: var(--accent-glow);
       }
@@ -307,6 +291,7 @@
         font-size: 20px;
         position: relative;
         display: inline-block;
+        width: 100%;
       }
 
       .box h3:after {
@@ -327,6 +312,17 @@
       .box p {
         font-size: 16px;
         line-height: 1.6;
+      }
+
+      .box-icon {
+        font-size: 24px;
+        margin-bottom: 15px;
+        color: var(--accent);
+        transition: var(--transition);
+      }
+
+      .box:hover .box-icon {
+        transform: scale(1.2) translateY(-5px);
       }
 
       /* LEFT RAIL */
@@ -393,7 +389,6 @@
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
         gap: 24px;
         margin-top: 40px;
-        width: 100%;
       }
 
       .team-card {
@@ -404,6 +399,8 @@
         text-align: center;
         transition: var(--transition);
         backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
       }
 
       .team-card:hover {
@@ -423,6 +420,29 @@
         line-height: 1.5;
       }
 
+      .team-card:before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          45deg,
+          transparent,
+          rgba(0, 212, 255, 0.1),
+          transparent
+        );
+        transform: rotate(45deg);
+        transition: var(--transition);
+        opacity: 0;
+      }
+
+      .team-card:hover:before {
+        opacity: 1;
+        animation: shine 1.5s linear;
+      }
+
       /* BOTTOM RAIL (MOBILE) */
       .bottom-rail {
         display: none;
@@ -435,6 +455,7 @@
         z-index: 1000;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
         justify-content: space-around;
+        backdrop-filter: blur(10px);
       }
 
       .bottom-rail span {
@@ -449,6 +470,7 @@
       .bottom-rail span.active {
         color: var(--accent);
         background: rgba(0, 212, 255, 0.15);
+        box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
       }
 
       /* FOOTER */
@@ -461,7 +483,7 @@
         border-top: 1px solid rgba(255, 255, 255, 0.08);
         position: relative;
         z-index: 100;
-        width: 100%;
+        backdrop-filter: blur(10px);
       }
 
       /* SCROLL PROGRESS */
@@ -471,42 +493,355 @@
         left: 0;
         width: 0%;
         height: 3px;
-        background: linear-gradient(
-          to right,
-          var(--accent-dark),
-          var(--accent)
-        );
+        background: var(--gradient);
         z-index: 1001;
         transition: width 0.2s ease;
+        box-shadow: 0 0 10px var(--accent);
       }
 
-      /* CUSTOM SCROLLBAR */
-      .content::-webkit-scrollbar {
-        width: 8px;
+      /* FLOATING ELEMENTS */
+      .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: -1;
       }
 
-      .content::-webkit-scrollbar-track {
+      .shape {
+        position: absolute;
+        opacity: 0.1;
+        border-radius: 50%;
+        background: var(--accent);
+        filter: blur(40px);
+        animation: float 15s infinite linear;
+      }
+
+      .shape:nth-child(1) {
+        width: 300px;
+        height: 300px;
+        top: -150px;
+        left: -150px;
+        animation-delay: 0s;
+        animation-duration: 25s;
+      }
+
+      .shape:nth-child(2) {
+        width: 200px;
+        height: 200px;
+        bottom: -100px;
+        right: 20%;
+        animation-delay: -5s;
+        animation-duration: 20s;
+      }
+
+      .shape:nth-child(3) {
+        width: 150px;
+        height: 150px;
+        bottom: 30%;
+        left: -75px;
+        animation-delay: -10s;
+        animation-duration: 15s;
+      }
+
+      /* NEW: MODERN NAVIGATION INDICATOR */
+      .nav-indicator {
+        position: fixed;
+        top: 50%;
+        right: 40px;
+        transform: translateY(-50%);
+        z-index: 900;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .indicator-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+        transition: var(--transition);
+        position: relative;
+      }
+
+      .indicator-dot.active {
+        background: var(--accent);
+        box-shadow: 0 0 10px var(--accent);
+        transform: scale(1.2);
+        z-index: 1;
+      }
+
+      .indicator-dot:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 24px;
+        height: 24px;
+        border: 1px solid transparent;
+        border-radius: 50%;
+        transition: var(--transition);
+      }
+
+      .indicator-dot:hover:after {
+        border-color: var(--accent);
+      }
+
+      .indicator-dot span {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0;
+        font-size: 12px;
+        color: var(--accent);
+        font-weight: 600;
+        transition: var(--transition);
+        pointer-events: none;
+        white-space: nowrap;
+      }
+
+      .indicator-dot:hover span {
+        opacity: 1;
+        right: 25px;
+      }
+
+      /* NEW: MODERN SECTION STYLES */
+      .section-title {
+        position: relative;
+        margin-bottom: 40px;
+      }
+
+      .section-title:after {
+        content: "";
+        position: absolute;
+        bottom: -15px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: var(--gradient);
+        border-radius: 3px;
+      }
+
+      /* NEW: CONTENT CONTAINER IMPROVEMENTS */
+      .content-container {
+        max-height: 70vh;
+        overflow-y: auto;
+        padding-right: 10px;
+        width: 100%;
+      }
+
+      .content-container::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .content-container::-webkit-scrollbar-track {
         background: rgba(255, 255, 255, 0.05);
         border-radius: 10px;
       }
 
-      .content::-webkit-scrollbar-thumb {
+      .content-container::-webkit-scrollbar-thumb {
         background: var(--accent);
         border-radius: 10px;
       }
 
-      .content::-webkit-scrollbar-thumb:hover {
+      .content-container::-webkit-scrollbar-thumb:hover {
         background: var(--accent-dark);
       }
 
+      /* NEW: MODERN BUTTON STYLES */
+      .btn {
+        display: inline-block;
+        padding: 12px 28px;
+        background: var(--gradient);
+        color: white;
+        border: none;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 212, 255, 0.4);
+      }
+
+      .btn-outline {
+        background: transparent;
+        border: 2px solid var(--accent);
+        color: var(--accent);
+      }
+
+      .btn-outline:hover {
+        background: rgba(0, 212, 255, 0.1);
+      }
+
+      /* NEW: MODERN CARD STYLES */
+      .modern-card {
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.05),
+          rgba(255, 255, 255, 0.02)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 30px;
+        transition: var(--transition);
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .modern-card:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          45deg,
+          transparent,
+          rgba(0, 212, 255, 0.05),
+          transparent
+        );
+        transition: var(--transition);
+        opacity: 0;
+      }
+
+      .modern-card:hover {
+        transform: translateY(-8px);
+        border-color: var(--accent);
+        box-shadow: var(--accent-glow);
+      }
+
+      .modern-card:hover:before {
+        opacity: 1;
+      }
+
+      /* NEW: STAT COUNTERS */
+      .stats-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        margin: 60px 0;
+      }
+
+      .stat-item {
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 48px;
+        font-weight: 700;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 10px;
+        font-family: "Oswald", sans-serif;
+      }
+
+      .stat-label {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      /* FORM STYLES */
+      .contact-form {
+        margin-top: 40px;
+        max-width: 800px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .form-input,
+      .form-textarea {
+        width: 100%;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: white;
+        font-family: "Inter", sans-serif;
+      }
+
+      .form-textarea {
+        min-height: 120px;
+        resize: vertical;
+        margin-bottom: 20px;
+      }
+
       /* RESPONSIVE */
+      @media (max-width: 1200px) {
+        header {
+          padding: 18px 30px;
+        }
+
+        header.scrolled {
+          padding: 12px 30px;
+        }
+
+        .content {
+          padding: 0 30px;
+        }
+      }
+
       @media (max-width: 1024px) {
-        .left-rail {
-          left: 20px;
+        .left-rail,
+        .nav-indicator {
+          display: none;
         }
 
         h1 {
           font-size: 42px;
+        }
+
+        .content {
+          padding: 0 25px;
+        }
+      }
+
+      @media (max-width: 900px) {
+        header {
+          padding: 15px 20px;
+        }
+
+        header.scrolled {
+          padding: 10px 20px;
+        }
+
+        .logo {
+          height: 35px;
+        }
+
+        header h2 {
+          font-size: 20px;
+        }
+
+        h1 {
+          font-size: 38px;
+        }
+
+        .content {
+          padding: 0 20px;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
         }
       }
 
@@ -524,15 +859,11 @@
         }
 
         header h2 {
-          font-size: 20px;
+          font-size: 18px;
         }
 
         nav {
           display: none;
-        }
-
-        nav.active {
-          display: block;
           position: absolute;
           top: 100%;
           left: 0;
@@ -540,6 +871,11 @@
           background: rgba(0, 0, 0, 0.98);
           padding: 20px;
           border-top: 1px solid rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(10px);
+        }
+
+        nav.active {
+          display: block;
         }
 
         nav .nav-links {
@@ -552,7 +888,11 @@
         }
 
         h1 {
-          font-size: 36px;
+          font-size: 32px;
+        }
+
+        p {
+          font-size: 16px;
         }
 
         .left-rail {
@@ -567,29 +907,69 @@
           grid-template-columns: 1fr;
         }
 
-        .main-container {
-          margin-top: 70px;
-          height: calc(100vh - 70px);
+        .content {
+          padding: 0 20px;
+        }
+
+        .stat-number {
+          font-size: 36px;
+        }
+
+        section {
+          padding: 80px 0;
+          min-height: auto;
+        }
+
+        .stats-container {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 20px;
+          margin: 40px 0;
+        }
+
+        .eyebrow {
+          font-size: 12px;
+          letter-spacing: 2px;
+          padding: 5px 12px;
+        }
+
+        .modern-card,
+        .box,
+        .team-card {
+          padding: 20px;
+        }
+
+        .content-container {
+          max-height: none;
+          overflow-y: visible;
         }
       }
 
       @media (max-width: 480px) {
         h1 {
           font-size: 28px;
+          margin-bottom: 15px;
         }
 
         p {
-          font-size: 16px;
+          font-size: 15px;
         }
 
         .eyebrow {
-          font-size: 12px;
-          letter-spacing: 2px;
+          font-size: 11px;
+          letter-spacing: 1.5px;
+          margin-bottom: 12px;
         }
 
         .box,
-        .team-card {
-          padding: 20px;
+        .team-card,
+        .modern-card {
+          padding: 18px;
+        }
+
+        .box-icon,
+        .box h3,
+        .team-card h3 {
+          margin-bottom: 12px;
         }
 
         footer {
@@ -597,9 +977,58 @@
           font-size: 13px;
         }
 
-        .main-container {
-          margin-top: 60px;
-          height: calc(100vh - 60px);
+        .btn {
+          padding: 10px 20px;
+          font-size: 13px;
+        }
+
+        .stats-container {
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
+
+        .stat-number {
+          font-size: 32px;
+        }
+
+        .stat-label {
+          font-size: 14px;
+        }
+
+        header {
+          padding: 12px 15px;
+        }
+
+        header.scrolled {
+          padding: 8px 15px;
+        }
+
+        .content {
+          padding: 0 15px;
+        }
+
+        .form-input,
+        .form-textarea {
+          padding: 10px;
+        }
+      }
+
+      @media (max-width: 360px) {
+        h1 {
+          font-size: 24px;
+        }
+
+        .logo-container h2 {
+          font-size: 16px;
+        }
+
+        .logo {
+          height: 28px;
+        }
+
+        .btn {
+          padding: 8px 16px;
+          font-size: 12px;
         }
       }
 
@@ -615,14 +1044,109 @@
         }
       }
 
+      @keyframes float {
+        0% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(180deg);
+        }
+        100% {
+          transform: translateY(0) rotate(360deg);
+        }
+      }
+
+      @keyframes shine {
+        0% {
+          left: -100%;
+        }
+        20% {
+          left: 100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+
       .animate {
         animation: fadeIn 0.8s ease forwards;
+      }
+
+      /* CUSTOM SCROLLBAR */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--accent);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-dark);
+      }
+
+      /* PARTICLE EFFECT */
+      .particles {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      .particle {
+        position: absolute;
+        background: var(--accent);
+        border-radius: 50%;
+        opacity: 0.3;
+        animation: particleFloat 15s infinite linear;
+      }
+
+      @keyframes particleFloat {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 0.3;
+        }
+        100% {
+          transform: translateY(-100vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+
+      /* GLOW EFFECTS */
+      .glow {
+        text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+      }
+
+      /* Fix for mobile viewport height issue */
+      @media (max-height: 700px) {
+        section {
+          min-height: 700px;
+          padding: 70px 0;
+        }
       }
     </style>
   </head>
   <body>
     <!-- SCROLL PROGRESS -->
     <div class="scroll-progress"></div>
+
+    <!-- FLOATING SHAPES -->
+    <div class="floating-shapes">
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+    </div>
+
+    <!-- PARTICLE EFFECT -->
+    <div class="particles" id="particles"></div>
 
     <!-- HEADER -->
     <header>
@@ -650,101 +1174,111 @@
       </button>
     </header>
 
-    <!-- MAIN CONTENT -->
-    <div class="main-container">
-      <!-- LEFT RAIL -->
-      <div class="left-rail">
-        <div class="rail-item active" data-slide="home">
-          <div class="rail-line"></div>
-          <div class="rail-text">Home</div>
-        </div>
-        <div class="rail-item" data-slide="services">
-          <div class="rail-line"></div>
-          <div class="rail-text">Services</div>
-        </div>
-        <div class="rail-item" data-slide="cases">
-          <div class="rail-line"></div>
-          <div class="rail-text">Cases</div>
-        </div>
-        <div class="rail-item" data-slide="why">
-          <div class="rail-line"></div>
-          <div class="rail-text">Why</div>
-        </div>
-        <div class="rail-item" data-slide="about">
-          <div class="rail-line"></div>
-          <div class="rail-text">About</div>
-        </div>
-        <div class="rail-item" data-slide="news">
-          <div class="rail-line"></div>
-          <div class="rail-text">News</div>
-        </div>
-        <div class="rail-item" data-slide="contact">
-          <div class="rail-line"></div>
-          <div class="rail-text">Contact</div>
-        </div>
+    <!-- NAVIGATION INDICATOR -->
+    <div class="nav-indicator">
+      <div class="indicator-dot active" data-slide="home">
+        <span>Home</span>
       </div>
+      <div class="indicator-dot" data-slide="services">
+        <span>Services</span>
+      </div>
+      <div class="indicator-dot" data-slide="cases"><span>Cases</span></div>
+      <div class="indicator-dot" data-slide="why"><span>Why Us</span></div>
+      <div class="indicator-dot" data-slide="about"><span>About</span></div>
+      <div class="indicator-dot" data-slide="news"><span>News</span></div>
+      <div class="indicator-dot" data-slide="contact"><span>Contact</span></div>
+    </div>
 
-      <!-- SLIDES -->
-      <section>
-        <!-- HOME -->
-        <article class="slide active" id="home">
-          <div
-            class="slide-bg"
-            style="
-              background-image: url('https://images.unsplash.com/photo-1531297484001-80022131f5a1');
-            "
-          ></div>
-          <div class="overlay-gradient"></div>
-          <div class="content">
-            <div class="eyebrow">Welcome</div>
-            <h1>Empowering Digital Transformation</h1>
-            <p>
-              Abhinaya Limited is a UK-based consultancy specialising in
-              high-performance computing (HPC), AI/ML, cloud-edge solutions, and
-              healthcare IT platforms. We accelerate innovation by bridging
-              advanced research with enterprise-grade delivery.
-            </p>
-            <div class="box-grid">
-              <div class="box animate">
-                <h3>Our Mission</h3>
-                <p>
-                  To empower organisations with tailored digital solutions that
-                  drive sustainable growth and operational excellence.
-                </p>
-              </div>
-              <div class="box animate">
-                <h3>Key Highlights</h3>
-                <p>
-                  Expertise across HPC, AI/ML, cloud-edge systems, healthcare
-                  automation, and product engineering. Strong academic and
-                  industry collaborations worldwide.
-                </p>
-              </div>
-              <div class="box animate">
-                <h3>Call to Action</h3>
-                <p>
-                  Discover how Abhinaya Limited can partner with you — from
-                  AI-optimised HPC to healthcare operations platforms.
-                </p>
-              </div>
+    <!-- SLIDES -->
+    <main>
+      <!-- HOME -->
+      <section id="home">
+        <div
+          class="slide-bg"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1531297484001-80022131f5a1');
+          "
+        ></div>
+        <div class="overlay-gradient"></div>
+        <div class="content">
+          <div class="eyebrow">Welcome</div>
+          <h1>Empowering Digital Transformation</h1>
+          <p>
+            Abhinaya Limited is a UK-based consultancy specialising in
+            high-performance computing (HPC), AI/ML, cloud-edge solutions, and
+            healthcare IT platforms. We accelerate innovation by bridging
+            advanced research with enterprise-grade delivery.
+          </p>
+
+          <!-- STATS COUNTER -->
+          <div class="stats-container">
+            <div class="stat-item">
+              <div class="stat-number" data-count="50">0</div>
+              <div class="stat-label">Projects Completed</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" data-count="15">0</div>
+              <div class="stat-label">Industry Partners</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" data-count="98">0</div>
+              <div class="stat-label">Client Satisfaction</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" data-count="12">0</div>
+              <div class="stat-label">Years Experience</div>
             </div>
           </div>
-        </article>
 
-        <!-- SERVICES -->
-        <article class="slide" id="services">
-          <div
-            class="slide-bg"
-            style="
-              background-image: url('https://images.unsplash.com/photo-1526378722484-bd91ca387e72');
-            "
-          ></div>
-          <div class="overlay-gradient"></div>
-          <div class="content">
-            <div class="eyebrow">Services</div>
-            <h1>End-to-End Engineering</h1>
+          <div class="box-grid">
+            <div class="modern-card animate">
+              <div class="box-icon"><i class="fas fa-bullseye"></i></div>
+              <h3>Our Mission</h3>
+              <p>
+                To empower organisations with tailored digital solutions that
+                drive sustainable growth and operational excellence.
+              </p>
+            </div>
+            <div class="modern-card animate">
+              <div class="box-icon"><i class="fas fa-star"></i></div>
+              <h3>Key Highlights</h3>
+              <p>
+                Expertise across HPC, AI/ML, cloud-edge systems, healthcare
+                automation, and product engineering. Strong academic and
+                industry collaborations worldwide.
+              </p>
+            </div>
+            <div class="modern-card animate">
+              <div class="box-icon"><i class="fas fa-handshake"></i></div>
+              <h3>Call to Action</h3>
+              <p>
+                Discover how Abhinaya Limited can partner with you — from
+                AI-optimised HPC to healthcare operations platforms.
+              </p>
+              <a href="#contact" class="btn" style="margin-top: 20px"
+                >Get in Touch</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SERVICES -->
+      <section id="services">
+        <div
+          class="slide-bg"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1526378722484-bd91ca387e72');
+          "
+        ></div>
+        <div class="overlay-gradient"></div>
+        <div class="content">
+          <div class="eyebrow">Services</div>
+          <h1>End-to-End Engineering</h1>
+          <div class="content-container">
             <div class="box-grid">
-              <div class="box animate">
+              <div class="modern-card animate">
+                <div class="box-icon"><i class="fas fa-microchip"></i></div>
                 <h3>High-Performance Computing & AI</h3>
                 <p>
                   HPC ecosystem design, optimisation & benchmarking. AI model
@@ -752,7 +1286,8 @@
                   documentation systems.
                 </p>
               </div>
-              <div class="box animate">
+              <div class="modern-card animate">
+                <div class="box-icon"><i class="fas fa-code"></i></div>
                 <h3>Software Product Development</h3>
                 <p>
                   End-to-end delivery with expertise in C, C++, Python, Java,
@@ -760,7 +1295,8 @@
                   privacy-by-design platforms.
                 </p>
               </div>
-              <div class="box animate">
+              <div class="modern-card animate">
+                <div class="box-icon"><i class="fas fa-industry"></i></div>
                 <h3>AI for Industry</h3>
                 <p>
                   Healthcare: diagnostics, automation, analytics.<br />Manufacturing:
@@ -768,7 +1304,8 @@
                   process automation, customer insights.
                 </p>
               </div>
-              <div class="box animate">
+              <div class="modern-card animate">
+                <div class="box-icon"><i class="fas fa-cloud"></i></div>
                 <h3>Cloud & Edge Solutions</h3>
                 <p>
                   Kubernetes & Docker orchestration. Virtualisation for
@@ -776,7 +1313,8 @@
                   service portals.
                 </p>
               </div>
-              <div class="box animate">
+              <div class="modern-card animate">
+                <div class="box-icon"><i class="fas fa-cogs"></i></div>
                 <h3>Embedded & Parallel Computing</h3>
                 <p>
                   DSP, GPU, FPGA acceleration. Parallel programming. Embedded
@@ -785,104 +1323,127 @@
               </div>
             </div>
           </div>
-        </article>
+        </div>
+      </section>
 
-        <!-- CASE STUDIES -->
-        <article class="slide" id="cases">
-          <div
-            class="slide-bg"
-            style="
-              background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d');
-            "
-          ></div>
-          <div class="overlay-gradient"></div>
-          <div class="content">
-            <div class="eyebrow">Case Studies</div>
-            <h1>Proven Impact</h1>
-            <div class="box-grid">
-              <div class="box animate">
-                <h3>AI-Powered Clinical Documentation</h3>
-                <p>
-                  Reduced documentation time by 40%.<br /><i
-                    >"Transformed our workflows — now instant."</i
-                  >
-                </p>
-              </div>
-              <div class="box animate">
-                <h3>Hospital Operations Portal</h3>
-                <p>
-                  Connected departments with real-time visibility.<br /><i
-                    >"A game-changer for safety and efficiency."</i
-                  >
-                </p>
-              </div>
-              <div class="box animate">
-                <h3>AI Analytics for Performance</h3>
-                <p>
-                  15% improvement in resource allocation.<br /><i
-                    >"Reliable data for confident decisions."</i
-                  >
-                </p>
-              </div>
+      <!-- CASE STUDIES -->
+      <section id="cases">
+        <div
+          class="slide-bg"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d');
+          "
+        ></div>
+        <div class="overlay-gradient"></div>
+        <div class="content">
+          <div class="eyebrow">Case Studies</div>
+          <h1>Proven Impact</h1>
+          <div class="box-grid">
+            <div class="modern-card animate">
+              <div class="box-icon"><i class="fas fa-file-medical"></i></div>
+              <h3>AI-Powered Clinical Documentation</h3>
+              <p>
+                Reduced documentation time by 40%.<br /><i
+                  >"Transformed our workflows — now instant."</i
+                >
+              </p>
+              <a href="#" class="btn btn-outline" style="margin-top: 15px"
+                >Read Case Study</a
+              >
+            </div>
+            <div class="modern-card animate">
+              <div class="box-icon"><i class="fas fa-hospital"></i></div>
+              <h3>Hospital Operations Portal</h3>
+              <p>
+                Connected departments with real-time visibility.<br /><i
+                  >"A game-changer for safety and efficiency."</i
+                >
+              </p>
+              <a href="#" class="btn btn-outline" style="margin-top: 15px"
+                >Read Case Study</a
+              >
+            </div>
+            <div class="modern-card animate">
+              <div class="box-icon"><i class="fas fa-chart-line"></i></div>
+              <h3>AI Analytics for Performance</h3>
+              <p>
+                15% improvement in resource allocation.<br /><i
+                  >"Reliable data for confident decisions."</i
+                >
+              </p>
+              <a href="#" class="btn btn-outline" style="margin-top: 15px"
+                >Read Case Study</a
+              >
             </div>
           </div>
-        </article>
+        </div>
+      </section>
 
-        <!-- WHY -->
-        <article class="slide" id="why">
-          <div
-            class="slide-bg"
-            style="
-              background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c');
-            "
-          ></div>
-          <div class="overlay-gradient"></div>
-          <div class="content">
-            <div class="eyebrow">Why Choose Us</div>
-            <h1>Trusted Expertise</h1>
+      <!-- WHY -->
+      <section id="why">
+        <div
+          class="slide-bg"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c');
+          "
+        ></div>
+        <div class="overlay-gradient"></div>
+        <div class="content">
+          <div class="eyebrow">Why Choose Us</div>
+          <h1>Trusted Expertise</h1>
+          <div class="content-container">
             <div class="box-grid">
-              <div class="box animate">
+              <div class="modern-card animate">
+                <div class="box-icon"><i class="fas fa-award"></i></div>
                 <h3>Proven Expertise</h3>
                 <p>Decades in HPC, AI, Cloud & IT.</p>
               </div>
-              <div class="box animate">
+              <div class="modern-card animate">
+                <div class="box-icon"><i class="fas fa-layer-group"></i></div>
                 <h3>End-to-End</h3>
                 <p>From research prototypes to full deployment.</p>
               </div>
-              <div class="box animate">
+              <div class="modern-card animate">
+                <div class="box-icon"><i class="fas fa-heartbeat"></i></div>
                 <h3>Healthcare Leadership</h3>
                 <p>Advanced healthcare IT systems with AI at the core.</p>
               </div>
-              <div class="box animate">
+              <div class="modern-card animate">
+                <div class="box-icon"><i class="fas fa-robot"></i></div>
                 <h3>Tailored AI</h3>
                 <p>Domain-specific models optimised for performance.</p>
               </div>
-              <div class="box animate">
+              <div class="modern-card animate">
+                <div class="box-icon"><i class="fas fa-handshake"></i></div>
                 <h3>Collaboration</h3>
                 <p>Strong network across academia & industry.</p>
               </div>
-              <div class="box animate">
+              <div class="modern-card animate">
+                <div class="box-icon"><i class="fas fa-shield-alt"></i></div>
                 <h3>Quality & Security</h3>
                 <p>Robust, scalable, and compliant solutions.</p>
               </div>
             </div>
           </div>
-        </article>
+        </div>
+      </section>
 
-        <!-- ABOUT -->
-        <article class="slide" id="about">
-          <div
-            class="slide-bg"
-            style="
-              background-image: url('https://images.unsplash.com/photo-1551836022-4c4c79ecde51');
-            "
-          ></div>
-          <div class="overlay-gradient"></div>
-          <div class="content">
-            <div class="eyebrow">About Us</div>
-            <h1>Who We Are</h1>
+      <!-- ABOUT -->
+      <section id="about">
+        <div
+          class="slide-bg"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1551836022-4c4c79ecde51');
+          "
+        ></div>
+        <div class="overlay-gradient"></div>
+        <div class="content">
+          <div class="eyebrow">About Us</div>
+          <h1>Who We Are</h1>
+          <div class="content-container">
             <div class="box-grid">
-              <div class="box animate">
+              <div class="modern-card animate">
+                <div class="box-icon"><i class="fas fa-building"></i></div>
                 <h3>Company</h3>
                 <p>
                   Abhinaya Limited incorporated 27 March 2023 in Bristol, UK. A
@@ -890,7 +1451,8 @@
                   solutions globally.
                 </p>
               </div>
-              <div class="box animate">
+              <div class="modern-card animate">
+                <div class="box-icon"><i class="fas fa-bullseye"></i></div>
                 <h3>Mission</h3>
                 <p>
                   To empower organisations with consulting and engineering
@@ -898,7 +1460,8 @@
                   transformation.
                 </p>
               </div>
-              <div class="box animate">
+              <div class="modern-card animate">
+                <div class="box-icon"><i class="fas fa-rocket"></i></div>
                 <h3>Approach</h3>
                 <p>
                   We bring excellence, collaboration, and innovation across all
@@ -909,96 +1472,132 @@
 
             <h1 style="margin-top: 40px">Leadership</h1>
             <div class="team-grid">
-              <div class="team-card animate">
+              <div class="modern-card animate">
                 <h3>Ms Brindha Murugesan</h3>
                 <p>Director</p>
               </div>
-              <div class="team-card animate">
+              <div class="modern-card animate">
                 <h3>Mr Karthee Sivalingam</h3>
                 <p>Director</p>
               </div>
             </div>
           </div>
-        </article>
-
-        <!-- NEWS -->
-        <article class="slide" id="news">
-          <div
-            class="slide-bg"
-            style="
-              background-image: url('https://images.unsplash.com/photo-1504711434969-e33886168f5c');
-            "
-          ></div>
-          <div class="overlay-gradient"></div>
-          <div class="content">
-            <div class="eyebrow">News & Insights</div>
-            <h1>Latest Updates</h1>
-            <div class="box-grid">
-              <div class="box animate">
-                <h3>2023</h3>
-                <p>
-                  Company incorporated and began delivering consulting across
-                  healthcare and HPC sectors.
-                </p>
-              </div>
-              <div class="box animate">
-                <h3>2024</h3>
-                <p>
-                  Development of AI-powered healthcare documentation and
-                  automation platforms.
-                </p>
-              </div>
-              <div class="box animate">
-                <h3>2025</h3>
-                <p>
-                  Expansion of partnerships with universities, hospitals, and
-                  industry leaders in AI & HPC.
-                </p>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- CONTACT -->
-        <article class="slide" id="contact">
-          <div
-            class="slide-bg"
-            style="
-              background-image: url('https://images.unsplash.com/photo-1521791055366-0d553872125f');
-            "
-          ></div>
-          <div class="overlay-gradient"></div>
-          <div class="content">
-            <div class="eyebrow">Contact Us</div>
-            <h1>Let's Work Together</h1>
-            <div class="box-grid">
-              <div class="box animate">
-                <h3>Email</h3>
-                <p>contact@abhinaya.co.uk</p>
-              </div>
-              <div class="box animate">
-                <h3>Location</h3>
-                <p>Bristol, United Kingdom</p>
-              </div>
-              <div class="box animate">
-                <h3>LinkedIn</h3>
-                <p>linkedin.com/company/abhinaya-ltd</p>
-              </div>
-            </div>
-          </div>
-        </article>
+        </div>
       </section>
-    </div>
+
+      <!-- NEWS -->
+      <section id="news">
+        <div
+          class="slide-bg"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1504711434969-e33886168f5c');
+          "
+        ></div>
+        <div class="overlay-gradient"></div>
+        <div class="content">
+          <div class="eyebrow">News & Insights</div>
+          <h1>Latest Updates</h1>
+          <div class="box-grid">
+            <div class="modern-card animate">
+              <div class="box-icon"><i class="fas fa-calendar-alt"></i></div>
+              <h3>2023</h3>
+              <p>
+                Company incorporated and began delivering consulting across
+                healthcare and HPC sectors.
+              </p>
+              <a href="#" class="btn btn-outline" style="margin-top: 15px"
+                >Read More</a
+              >
+            </div>
+            <div class="modern-card animate">
+              <div class="box-icon"><i class="fas fa-calendar-alt"></i></div>
+              <h3>2024</h3>
+              <p>
+                Development of AI-powered healthcare documentation and
+                automation platforms.
+              </p>
+              <a href="#" class="btn btn-outline" style="margin-top: 15px"
+                >Read More</a
+              >
+            </div>
+            <div class="modern-card animate">
+              <div class="box-icon"><i class="fas fa-calendar-alt"></i></div>
+              <h3>2025</h3>
+              <p>
+                Expansion of partnerships with universities, hospitals, and
+                industry leaders in AI & HPC.
+              </p>
+              <a href="#" class="btn btn-outline" style="margin-top: 15px"
+                >Read More</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact">
+        <div
+          class="slide-bg"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1521791055366-0d553872125f');
+          "
+        ></div>
+        <div class="overlay-gradient"></div>
+        <div class="content">
+          <div class="eyebrow">Contact Us</div>
+          <h1>Let's Work Together</h1>
+          <div class="box-grid">
+            <div class="modern-card animate">
+              <div class="box-icon"><i class="fas fa-envelope"></i></div>
+              <h3>Email</h3>
+              <p>contact@abhinaya.co.uk</p>
+            </div>
+            <div class="modern-card animate">
+              <div class="box-icon"><i class="fas fa-map-marker-alt"></i></div>
+              <h3>Location</h3>
+              <p>Bristol, United Kingdom</p>
+            </div>
+            <div class="modern-card animate">
+              <div class="box-icon"><i class="fab fa-linkedin"></i></div>
+              <h3>LinkedIn</h3>
+              <p>linkedin.com/company/abhinaya-ltd</p>
+            </div>
+          </div>
+
+          <!-- CONTACT FORM -->
+          <div class="modern-card contact-form">
+            <h3 style="margin-bottom: 20px">Send us a message</h3>
+            <form>
+              <div class="form-grid">
+                <input type="text" placeholder="Your Name" class="form-input" />
+                <input
+                  type="email"
+                  placeholder="Your Email"
+                  class="form-input"
+                />
+              </div>
+              <textarea
+                placeholder="Your Message"
+                rows="4"
+                class="form-textarea"
+              ></textarea>
+              <button type="submit" class="btn">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
 
     <!-- BOTTOM RAIL (MOBILE) -->
     <div class="bottom-rail">
-      <span class="active">Home</span>
-      <span>Services</span>
-      <span>Cases</span>
-      <span>Why</span>
-      <span>About</span>
-      <span>News</span>
-      <span>Contact</span>
+      <span class="active" data-section="home">Home</span>
+      <span data-section="services">Services</span>
+      <span data-section="cases">Cases</span>
+      <span data-section="why">Why</span>
+      <span data-section="about">About</span>
+      <span data-section="news">News</span>
+      <span data-section="contact">Contact</span>
     </div>
 
     <!-- FOOTER -->
@@ -1008,14 +1607,38 @@
 
     <!-- SCRIPT -->
     <script>
-      const slides = document.querySelectorAll(".slide");
-      const railItems = document.querySelectorAll(".rail-item");
+      const sections = document.querySelectorAll("section");
+      const indicatorDots = document.querySelectorAll(".indicator-dot");
       const navLinks = document.querySelectorAll(".nav-links a");
       const bottomRail = document.querySelectorAll(".bottom-rail span");
       const hamburger = document.getElementById("hamburger");
       const nav = document.getElementById("nav");
       const header = document.querySelector("header");
       const scrollProgress = document.querySelector(".scroll-progress");
+      const particlesContainer = document.getElementById("particles");
+      const statNumbers = document.querySelectorAll(".stat-number");
+
+      // Create particles
+      function createParticles() {
+        for (let i = 0; i < 50; i++) {
+          const particle = document.createElement("div");
+          particle.classList.add("particle");
+
+          // Random properties
+          const size = Math.random() * 5 + 2;
+          const posX = Math.random() * 100;
+          const delay = Math.random() * 15;
+          const duration = Math.random() * 10 + 10;
+
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.left = `${posX}%`;
+          particle.style.animationDelay = `${delay}s`;
+          particle.style.animationDuration = `${duration}s`;
+
+          particlesContainer.appendChild(particle);
+        }
+      }
 
       // Scroll progress indicator
       window.addEventListener("scroll", () => {
@@ -1034,6 +1657,37 @@
         } else {
           header.classList.remove("scrolled");
         }
+
+        // Section detection for active nav
+        let currentSection = "";
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (scrollTop >= sectionTop - 200) {
+            currentSection = section.getAttribute("id");
+          }
+        });
+
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href").substring(1) === currentSection) {
+            link.classList.add("active");
+          }
+        });
+
+        indicatorDots.forEach((dot) => {
+          dot.classList.remove("active");
+          if (dot.getAttribute("data-slide") === currentSection) {
+            dot.classList.add("active");
+          }
+        });
+
+        bottomRail.forEach((span) => {
+          span.classList.remove("active");
+          if (span.getAttribute("data-section") === currentSection) {
+            span.classList.add("active");
+          }
+        });
       });
 
       // Mobile menu toggle
@@ -1056,23 +1710,13 @@
         }
       });
 
-      function setActive(id) {
-        slides.forEach((s) => s.classList.remove("active"));
-        railItems.forEach((r) => r.classList.remove("active"));
-        navLinks.forEach((n) => n.classList.remove("active"));
-        bottomRail.forEach((b) => b.classList.remove("active"));
-
-        document.getElementById(id).classList.add("active");
-        document
-          .querySelectorAll(`[data-slide="${id}"]`)
-          .forEach((r) => r.classList.add("active"));
-        document
-          .querySelectorAll(`[href="#${id}"]`)
-          .forEach((n) => n.classList.add("active"));
-
-        const activeIndex = Array.from(slides).findIndex((s) => s.id === id);
-        if (bottomRail[activeIndex]) {
-          bottomRail[activeIndex].classList.add("active");
+      function scrollToSection(id) {
+        const section = document.getElementById(id);
+        if (section) {
+          window.scrollTo({
+            top: section.offsetTop,
+            behavior: "smooth",
+          });
         }
 
         // Close mobile menu after selection
@@ -1082,21 +1726,23 @@
         }
       }
 
-      railItems.forEach((item) =>
-        item.addEventListener("click", () =>
-          setActive(item.getAttribute("data-slide"))
+      indicatorDots.forEach((dot) =>
+        dot.addEventListener("click", () =>
+          scrollToSection(dot.getAttribute("data-slide"))
         )
       );
 
       navLinks.forEach((link) =>
         link.addEventListener("click", (e) => {
           e.preventDefault();
-          setActive(link.getAttribute("href").substring(1));
+          scrollToSection(link.getAttribute("href").substring(1));
         })
       );
 
-      bottomRail.forEach((span, i) =>
-        span.addEventListener("click", () => setActive(slides[i].id))
+      bottomRail.forEach((span) =>
+        span.addEventListener("click", () =>
+          scrollToSection(span.getAttribute("data-section"))
+        )
       );
 
       // Intersection Observer for animations
@@ -1110,14 +1756,53 @@
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("animate");
+
+            // Animate stats counting
+            if (entry.target.classList.contains("stat-number")) {
+              animateValue(
+                entry.target,
+                0,
+                parseInt(entry.target.getAttribute("data-count")),
+                2000
+              );
+            }
           }
         });
       }, observerOptions);
 
       // Observe all boxes and cards
-      document.querySelectorAll(".box, .team-card").forEach((item) => {
-        observer.observe(item);
-      });
+      document
+        .querySelectorAll(".modern-card, .stat-number")
+        .forEach((item) => {
+          observer.observe(item);
+        });
+
+      // Initialize particles
+      createParticles();
+
+      // Stats counter animation
+      function animateValue(obj, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+          if (!startTimestamp) startTimestamp = timestamp;
+          const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+          obj.innerHTML = Math.floor(progress * (end - start) + start);
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          }
+        };
+        window.requestAnimationFrame(step);
+      }
+
+      // Fix for mobile viewport height
+      function setVH() {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty("--vh", `${vh}px`);
+      }
+
+      setVH();
+      window.addEventListener("resize", setVH);
     </script>
   </body>
 </html>
+
